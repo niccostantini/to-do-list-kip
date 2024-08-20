@@ -1,6 +1,7 @@
 import "./styles/normalize.css";
 import "./styles/styles.css";
-import "./styles/fonts.scss"
+import "./styles/fonts.scss";
+import "./assets/images/corkbg_2.png";
 
 
 const addButton = document.querySelector('#addButton');
