@@ -17,6 +17,10 @@ body {
     z-index: 1;
 }
 
+#header h1 {
+    font-family: Dimis;
+}
+
 #sidebar {
     background-color:rgb(24, 78, 139);
     grid-column: 2 / 3;
