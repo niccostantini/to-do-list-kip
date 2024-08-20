@@ -1,5 +1,6 @@
 import "./styles/normalize.css";
 import "./styles/styles.css";
+import "./styles/fonts.scss"
 
 
 const addButton = document.querySelector('#addButton');
