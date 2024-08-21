@@ -3,6 +3,18 @@
     --color1: rgb(38, 124, 222);
     --color2: rgb(24, 78, 139);
     --color3: rgb(176, 213, 255);
+
+    --stickNote-color: rgb(255, 237, 134);
+    --stickNote-task-title-color: rgb(228, 203, 61);
+    --stickyNote-task-content-color: rgba(228, 203, 61, 0.302);
+
+    --highPriorityBg: rgb(255, 100, 100);
+    --highPriorityBorder: rgb(173, 21, 21);
+    --mediumPriorityBg: rgb(150, 141, 45);
+    --mediumPriorityBorder: rgb(95, 89, 21);
+    --lowPriorityBg: rgb(51, 132, 67);
+    --lowPriorityBorder: rgb(14, 93, 30);
+
 }
 
 body {
@@ -84,12 +96,16 @@ body::after {
 #main {
     grid-column: 3 / 4;
     grid-row: 3 / 4;
+
+    display: grid;
+    grid-template-rows: repeat(auto-fit, minmax(350px, 370px));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 370px));
 }
 
 #addButton {
-cursor: pointer;
+    cursor: pointer;
 
-font-family: Chekharda;
+    font-family: Chekharda;
 
     font-size: 50px;
     text-align: center;
@@ -98,7 +114,7 @@ font-family: Chekharda;
     left: calc(100vw - 120px);
     top: calc(100vh - 120px);
 
-    padding: 5px 25px 10px 25px;
+    padding: 5px 23px 10px 23px;
 
     border: 2px solid white;
     border-radius: 20px;
@@ -179,3 +195,140 @@ font-family: Chekharda;
     color: var(--color2);
     font-weight: 900;
 }
+
+.project {
+    border: none;
+    background-color: var(--stickNote-color);
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+    grid-template-columns: 1fr;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+}
+
+.project .projectTitle {
+    padding: 10px 10px 5px 10px;
+}
+
+.project > header > span {
+    font-size: small;
+}
+
+.content {
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+
+.task {
+    display: grid;
+    padding: 10px 5px 5px 10px;
+    max-height: 177px;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    grid-template-columns: 2.5fr 1fr;
+    grid-template-rows: 32px minmax(0,100px) 30px;
+    grid-template-areas:
+    "header header"
+    "description deadlines"
+    "button button";
+}
+
+.task.collapsed {
+    max-height: 27.2px; /* The height of the header or a minimal height */
+    overflow: hidden; /* Ensure content stays hidden when collapsed */
+    transition: max-height 0.4s ease;
+}
+
+.task.collapsed .description, 
+.task.collapsed .deadlines, 
+.task.collapsed .button {
+    transition: display 0.4s ease;
+}
+
+.task .description, 
+.task .deadlines, 
+.task .button {
+    background-color: var(--stickyNote-task-content-color);
+}
+
+.task header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-area: header;
+    padding-right: 5px;
+    background-color: var(--stickNote-task-title-color);
+}
+
+.task header > span {
+    padding: 3px 10px;
+    border: 2px solid black;
+    border-radius: 4px;
+}
+
+.task header > h4 {
+    padding: 3px 10px;
+
+}
+
+.task header > .highPriority {
+    font-weight: 900;
+    color: var(--highPriorityBorder);
+    border: 2px solid var(--highPriorityBorder);
+    background-color: var(--highPriorityBg);
+}
+
+.task header > .mediumPriority {
+    font-weight: 900;
+    color: var(--mediumPriorityBorder);
+    border: 2px solid var(--mediumPriorityBorder);
+    background-color: var(--mediumPriorityBg);
+}
+
+.task header > .lowPriority {
+    font-weight: 900;
+    color: var(--lowPriorityBorder);
+    border: 2px solid var(--lowPriorityBorder);
+    background-color: var(--lowPriorityBg);
+}
+
+.task .description {
+    grid-area: description;
+    font-size: small;
+    padding: 0 7px 7px 7px;
+    overflow:scroll;
+    scrollbar-width: thin;
+}
+
+.task .deadlines {
+    grid-area: deadlines;
+    font-size: small;
+    padding: 0 5px;
+
+}
+
+.task .button {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    grid-area: button;
+    text-align: right;
+}
+
+.button input[type="button"] {
+
+}
+
+.task label {padding-left: 7px;}
+
+ul {
+    list-style: none;
+    padding: none;
+}
+label {
+    line-height: 1.5;
+  }
