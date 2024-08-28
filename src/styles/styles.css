@@ -332,3 +332,7 @@ ul {
 label {
     line-height: 1.5;
   }
+
+dialog {
+    z-index: 4;
+}
