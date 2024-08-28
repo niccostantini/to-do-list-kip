@@ -1,4 +1,4 @@
-import {ToDo, Task, Project, createProject } from "./projects.js"
+import {ToDo, Task, Project, createProject, populateMainDiv} from "./projects.js"
 
 const templateProjects =
 [
@@ -96,11 +96,15 @@ const templateProjects =
   
 
 function addTemplates(templates) {
+    if (localStorage.length === 0){
     templates.forEach(template => localStorage.setItem(template.id, JSON.stringify(template)))
+    }
 }
 
-function deleteProject(id) {
-    taskToDelete
+function deleteProject(e) {
+    let projectId = e.target.closest(".project").id;
+    localStorage.removeItem(projectId);
+    populateMainDiv()
 }
 
 function deleteTask(taskId, projectId) {
@@ -111,9 +115,36 @@ function deleteTask(taskId, projectId) {
         if (taskIndex > -1) {
             projects.tasks.splice(taskIndex, 1); // Remove the task from the array
             localStorage.setItem(projectId, JSON.stringify(projects)); // Save the updated project back to localStorage
+            populateMainDiv()
         }
     }
 }
 
+function changeBoxStatus(checkboxId, taskId, projectId) {
+    // Retrieve the project from localStorage using projectId
+    let project = JSON.parse(localStorage.getItem(projectId));
 
-export {addTemplates, deleteTask, templateProjects}
+    if (project) {
+        // Find the task within the selected project using taskId
+        const task = project.tasks.find(task => task.id === taskId);
+        if (task) {
+            // Find the checkbox within the selected task using checkboxId
+            const checkbox = task.checkList.find(checkbox => checkbox.id === checkboxId);
+            if (checkbox) {
+                // Toggle the checkbox "status" element
+                checkbox.status = !checkbox.status;
+
+                // Save the updated project back to localStorage
+                localStorage.setItem(projectId, JSON.stringify(project));
+            }
+        }
+    }
+
+    // Re-populate the main div to reflect changes
+    populateMainDiv();
+}
+
+
+
+
+export {addTemplates, deleteTask, deleteProject, changeBoxStatus, templateProjects}

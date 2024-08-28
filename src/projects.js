@@ -1,4 +1,4 @@
-import { deleteTask } from "./data";
+import { deleteTask, deleteProject, changeBoxStatus } from "./data";
 
 const ToDo = function (id, status, label) {
     this.id = id;
@@ -72,9 +72,20 @@ function populateMainDiv() {
         projectTitle.textContent = project.title;
         const projectDescription = document.createElement('span');
         projectDescription.textContent = project.description;
+        const deleteProjectButton = document.createElement('input');
+        deleteProjectButton.type = 'button';
+        deleteProjectButton.value = 'X';
+        deleteProjectButton.className = `delete ${project.id}`
 
         projectHeader.appendChild(projectTitle);
         projectHeader.appendChild(projectDescription);
+        projectHeader.appendChild(deleteProjectButton)
+
+        //Add event listener
+        deleteProjectButton.addEventListener('click', (e) => {
+            deleteProject(e)
+        })
+
         projectDiv.appendChild(projectHeader);
 
         // Create the content section
@@ -85,7 +96,7 @@ function populateMainDiv() {
         project.tasks.forEach((task, taskIndex) => {
             const taskDiv = document.createElement('div');
             taskDiv.classList.add('task');
-            taskDiv.id = `task-${task.id}`; // Unique ID for the task
+            taskDiv.id = `${task.id}`; // Unique ID for the task
 
             const taskHeader = document.createElement('header');
             const taskTitle = document.createElement('h4');
@@ -116,6 +127,18 @@ function populateMainDiv() {
                 checkbox.type = 'checkbox';
                 checkbox.id = item.id;
                 checkbox.checked = item.status;
+
+                checkbox.addEventListener('change', (e) => {
+                    
+                    let projectId = e.target.closest('.project').id;
+                    let taskId = e.target.closest('.task').id;
+                    let checkboxId = e.target.id;
+
+                    console.log(`${checkboxId}, ${taskId}, ${projectId}`)
+
+                    changeBoxStatus(checkboxId, taskId, projectId)
+
+                })
 
                 const label = document.createElement('label');
                 label.setAttribute('for', item.id);
@@ -154,6 +177,8 @@ function populateMainDiv() {
             deleteButton.value = 'Delete';
             deleteButton.classList.add('delete');
 
+
+            /** DELETE TASK  */
             deleteButton.addEventListener('click', () => {
                 deleteTask(task.id, project.id);
                 populateMainDiv(); // Re-populate the main div after deletion
@@ -175,7 +200,5 @@ function populateMainDiv() {
     });
 }
 
-// Call the function to populate the .main div
-populateMainDiv();
 
 export {populateMainDiv}
