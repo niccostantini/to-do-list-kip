@@ -3,6 +3,9 @@ import "./styles/styles.css";
 import "./styles/fonts.scss";
 import "./assets/images/corkbg_2.png";
 
+import {templateProjects, addTemplates} from "./data.js"
+import { populateMainDiv } from "./projects.js";
+
 
 const addButton = document.querySelector('#addButton');
 const addProjectButton = document.querySelector('.addProjectButton');
@@ -29,3 +32,7 @@ taskHeaders.forEach(taskHeader => taskHeader.addEventListener("click", (event) =
     const clickedTask = event.currentTarget.closest('.task')
     clickedTask.classList.toggle("collapsed")
 }))
+
+addTemplates(templateProjects)
+
+populateMainDiv
