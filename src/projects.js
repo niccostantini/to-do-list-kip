@@ -201,4 +201,4 @@ function populateMainDiv() {
 }
 
 
-export {populateMainDiv}
+export {populateMainDiv, Project}
