@@ -160,8 +160,9 @@ function createProjectDialog() {
         deleteTaskButton.textContent = 'Delete Task';
         fieldset.appendChild(deleteTaskButton);
 
+        //Delete the fieldset relative to the task to be deleted
         deleteTaskButton.addEventListener("click", (e) => {
-            e.target.closest("fieldset").remove()
+            e.target.closest("fieldset").remove();
         })
 
         // taskTemplate.appendChild(fieldset);
