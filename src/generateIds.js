@@ -27,4 +27,4 @@ function generateId() {
 // Example usage:
 console.log(generateId());
 
-export default generateId;
+export {generateId};

@@ -5,6 +5,7 @@ import "./assets/images/corkbg_2.png";
 
 import {templateProjects, addTemplates} from "./data.js"
 import { populateMainDiv } from "./projects.js";
+import { createProjectDialog } from "./dialogs.js";
 
 
 const addButton = document.querySelector('#addButton');
@@ -35,4 +36,8 @@ taskHeaders.forEach(taskHeader => taskHeader.addEventListener("click", (event) =
 
 addTemplates(templateProjects)
 
-populateMainDiv
+addProjectButton.addEventListener("click", () => {
+    const dialog = createProjectDialog();
+    document.body.appendChild(dialog);
+    dialog.showModal();
+})
