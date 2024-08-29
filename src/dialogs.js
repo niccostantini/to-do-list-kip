@@ -1,6 +1,9 @@
 import { generateId } from "./generateIds.js";
 
+let taskNumber = 0;
+
 function createProjectDialog() {
+
     const dialog = document.createElement('dialog');
     dialog.id = 'addProjectDialog';
 
@@ -27,6 +30,7 @@ function createProjectDialog() {
     projectIdBox.required = true;
     projectIdBox.hidden = true;
     projectIdBox.value = projectId;
+    form.appendChild(projectIdBox);
 
     const titleInput = document.createElement('input');
     titleInput.type = 'text';
@@ -65,17 +69,21 @@ function createProjectDialog() {
 
     /**THIS MUST BE MADE A FUNCTIN OF TO GENERATE AS MANY TASK FIELD AS NEEDED WHEN CLICKING ON THE NEWTASK BUTTON*/
     /**    IN THE FUNCTION THAT APPENDS THE DATA IN LOCALSTORAGE, A UNIQUE ID MUST BE GIVE TO EACH TASKS     */
+    taskNumber = 0;
     function addNewTaskSection(generateTasksDiv) {
+
+        taskNumber++;
+
         const taskId = generateId();
         const fieldset = document.createElement('fieldset');
         
         const legend = document.createElement('legend');
-        legend.innerHTML = `Task <span class="task-number">1</span>`;
+        legend.innerHTML = `Task <span class="task-number">${taskNumber}</span>`;
         fieldset.appendChild(legend);
 
         // Task Title
         const taskTitleLabel = document.createElement('label');
-        taskTitleLabel.setAttribute('for', 'taskTitle-1');
+        taskTitleLabel.setAttribute('for', `taskTitle-${taskNumber}`);
         taskTitleLabel.textContent = 'Task Title';
         fieldset.appendChild(taskTitleLabel);
 
@@ -86,23 +94,24 @@ function createProjectDialog() {
         taskIdBox.required = true;
         taskIdBox.hidden = true;
         taskIdBox.value = taskId;
+        fieldset.appendChild(taskIdBox);
 
         const taskTitleInput = document.createElement('input');
         taskTitleInput.type = 'text';
-        taskTitleInput.id = 'taskTitle-1';
-        taskTitleInput.name = 'taskTitle-1';
+        taskTitleInput.id = `taskTitle-${taskNumber}`;
+        taskTitleInput.name = `taskTitle-${taskNumber}`;
         taskTitleInput.required = true;
         fieldset.appendChild(taskTitleInput);
 
         // Task Priority
         const taskPriorityLabel = document.createElement('label');
-        taskPriorityLabel.setAttribute('for', 'taskPriority-1');
+        taskPriorityLabel.setAttribute('for', `taskPriority-${taskNumber}`);
         taskPriorityLabel.textContent = 'Priority';
         fieldset.appendChild(taskPriorityLabel);
 
         const taskPrioritySelect = document.createElement('select');
-        taskPrioritySelect.id = 'taskPriority-1';
-        taskPrioritySelect.name = 'taskPriority-1';
+        taskPrioritySelect.id = `taskPriority-${taskNumber}`;
+        taskPrioritySelect.name = `taskPriority-${taskNumber}`;
         taskPrioritySelect.required = true;
         ['high', 'medium', 'low'].forEach(priority => {
             const option = document.createElement('option');
@@ -114,41 +123,41 @@ function createProjectDialog() {
 
         // Task Description
         const taskDescriptionLabel = document.createElement('label');
-        taskDescriptionLabel.setAttribute('for', 'taskDescription-1');
+        taskDescriptionLabel.setAttribute('for', `taskDescription-${taskNumber}`);
         taskDescriptionLabel.textContent = 'Task Description';
         fieldset.appendChild(taskDescriptionLabel);
 
         const taskDescriptionTextarea = document.createElement('textarea');
-        taskDescriptionTextarea.id = 'taskDescription-1';
-        taskDescriptionTextarea.name = 'taskDescription-1';
+        taskDescriptionTextarea.id = `taskDescription-${taskNumber}`;
+        taskDescriptionTextarea.name = `taskDescription-${taskNumber}`;
         taskDescriptionTextarea.rows = 3;
         taskDescriptionTextarea.required = true;
         fieldset.appendChild(taskDescriptionTextarea);
 
         // Task Due Date
         const taskDueDateLabel = document.createElement('label');
-        taskDueDateLabel.setAttribute('for', 'taskDueDate-1');
+        taskDueDateLabel.setAttribute('for', `taskDueDate-${taskNumber}`);
         taskDueDateLabel.textContent = 'Task Due Date';
         fieldset.appendChild(taskDueDateLabel);
 
         const taskDueDateInput = document.createElement('input');
         taskDueDateInput.type = 'date';
-        taskDueDateInput.id = 'taskDueDate-1';
-        taskDueDateInput.name = 'taskDueDate-1';
+        taskDueDateInput.id = `taskDueDate-${taskNumber}`;
+        taskDueDateInput.name = `taskDueDate-${taskNumber}`;
         taskDueDateInput.required = true;
         fieldset.appendChild(taskDueDateInput);
 
         // Task ToDo's
         /**    IN THE FUNCTION THAT APPENDS THE DATA IN LOCALSTORAGE, AN ID MUST BE GIVE TO ALL TODOS     */
         const taskChecklistLabel = document.createElement('label');
-        taskChecklistLabel.setAttribute('for', 'taskChecklist-1');
+        taskChecklistLabel.setAttribute('for', `taskChecklist-${taskNumber}`);
         taskChecklistLabel.textContent = "ToDo's";
         fieldset.appendChild(taskChecklistLabel);
 
         const taskChecklistInput = document.createElement('input');
         taskChecklistInput.type = 'text';
-        taskChecklistInput.id = 'taskChecklist-1';
-        taskChecklistInput.name = 'taskChecklist-1';
+        taskChecklistInput.id = `taskChecklist-${taskNumber}`;
+        taskChecklistInput.name = `taskChecklist-${taskNumber}`;
         taskChecklistInput.placeholder = 'Separate items by semicolons';
         taskChecklistInput.required = true;
         fieldset.appendChild(taskChecklistInput);
