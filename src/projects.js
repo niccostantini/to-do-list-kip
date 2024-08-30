@@ -83,12 +83,19 @@ function populateMainDiv() {
         projectDescription.textContent = project.description;
         const deleteProjectButton = document.createElement('input');
         deleteProjectButton.type = 'button';
-        deleteProjectButton.value = 'X';
+        deleteProjectButton.value = '✖';
+        deleteProjectButton.title = 'Delete project';
         deleteProjectButton.className = `delete ${project.id}`
 
-        projectHeader.appendChild(projectTitle);
-        projectHeader.appendChild(projectDescription);
-        projectHeader.appendChild(deleteProjectButton)
+        const headerDiv = document.createElement('div');
+        headerDiv.className = "headerDiv";
+
+        headerDiv.appendChild(projectTitle);
+        headerDiv.appendChild(projectDescription);
+
+        projectHeader.appendChild(headerDiv);
+
+        projectHeader.appendChild(deleteProjectButton);
 
         //Add event listener
         deleteProjectButton.addEventListener('click', (e) => {
@@ -109,6 +116,7 @@ function populateMainDiv() {
             taskDiv.id = `${task.id}`; // Unique ID for the task
 
             const taskHeader = document.createElement('header');
+            taskHeader.title = "Click to toggle collapsing";
             const taskTitle = document.createElement('h4');
             taskTitle.textContent = task.title;
             const taskPriority = document.createElement('span');
@@ -201,12 +209,14 @@ function populateMainDiv() {
 
             const editButton = document.createElement('input');
             editButton.type = 'button';
-            editButton.value = 'Edit';
+            editButton.value = '✍🏼';
+            editButton.title = 'Edit';
             editButton.classList.add('edit');
 
             const deleteButton = document.createElement('input');
             deleteButton.type = 'button';
-            deleteButton.value = 'Delete';
+            deleteButton.value = '❌';
+            deleteButton.title = 'Delete task';
             deleteButton.classList.add('delete');
 
 
