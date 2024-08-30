@@ -1,4 +1,5 @@
 import {ToDo, Task, Project, createProject, populateMainDiv} from "./projects.js"
+import { generateId } from "./generateIds.js";
 
 const templateProjects =
 [
@@ -93,11 +94,15 @@ const templateProjects =
       ]
     }
   ];
-  
 
-function addTemplates(templates) {
-    if (localStorage.length === 0){
-    templates.forEach(template => localStorage.setItem(template.id, JSON.stringify(template)))
+
+
+function addTemplates() {
+
+    if (JSON.parse(localStorage.getItem("firstTime")) == true) {
+        console.table(templateProjects)
+    templateProjects.forEach(template => {localStorage.setItem(template.id, JSON.stringify(template)); console.log(`added project ${template.id}`)})
+    localStorage.setItem("firstTime", false);
     }
 }
 
@@ -144,7 +149,70 @@ function changeBoxStatus(checkboxId, taskId, projectId) {
     populateMainDiv();
 }
 
+function createToDos(string) {
+    const labels = string.split(';').map(label => label.trim()); // Split the string by semicolons and trim any extra spaces
+    const todos = labels.map(label => new ToDo(generateId(), false, label)); // Create a ToDo for each label
+    return todos;
+}
+
+function addProject(project) {
+
+    const stringedProject = JSON.stringify(project);
+    localStorage.setItem(project.id, stringedProject);
+
+}
+
+function createProjectFromForm() {
+
+    let count = 1;
+    
+    const form = document.querySelector("dialog#addProjectDialog form");
+
+    const formData = new FormData(form);
+
+    let projectTasks = [];
+
+    const newProject = new Project(
+        formData.get("projectId"),
+        formData.get("projectTitle"),
+        formData.get("projectDescription"),
+        projectTasks
+    )
+
+    console.log(newProject)
+
+    const newTaskFieldsets = document.querySelectorAll("dialog#addProjectDialog form fieldset");
+/**ADD CONDITION TO RUN THE FOREACH ONLY IF IT IS NOT EMPTY */
+    newTaskFieldsets.forEach(taskFieldset => {
+        let taskId = `taskId-${count}`
+        let taskTitle = `taskTitle-${count}`;
+        let taskPriority = `taskPriority-${count}`;
+        let taskDueDate = `taskDueDate-${count}`;
+        let taskDescription = `taskDescription-${count}`;
+        let taskToDosUnparsed = formData.get(`taskChecklist-${count}`);
+        let taskToDosParsed = createToDos(taskToDosUnparsed);
+
+        const newTask = new Task(
+            formData.get(taskId),
+            formData.get(taskTitle),
+            formData.get(taskPriority),
+            formData.get(taskDueDate),
+            formData.get(taskDescription),
+            taskToDosParsed
+        )
+        count++;
+        console.log(newTask)
+
+        newProject.tasks.push(newTask)
+    })  
+
+    console.log(newProject)
+
+    addProject(newProject)
+
+}
 
 
 
-export {addTemplates, deleteTask, deleteProject, changeBoxStatus, templateProjects}
+
+export {addTemplates, deleteTask, deleteProject, changeBoxStatus, templateProjects, createProjectFromForm}

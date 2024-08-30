@@ -34,10 +34,26 @@ taskHeaders.forEach(taskHeader => taskHeader.addEventListener("click", (event) =
     clickedTask.classList.toggle("collapsed")
 }))
 
-addTemplates(templateProjects)
+// if (localStorage.length !== 0) addTemplates(templateProjects);
+// else populateMainDiv()
 
 addProjectButton.addEventListener("click", () => {
     const dialog = createProjectDialog();
     document.body.appendChild(dialog);
     dialog.showModal();
 })
+
+// Check if "firstTime" is already set in localStorage
+if (!localStorage.getItem("firstTime")) {
+    // If "firstTime" is not set, initialize it and perform any other initial setup
+    localStorage.setItem("firstTime", true);
+
+    // You can also add any additional code here that should run only once
+    console.log("First time setup complete.");
+} else {
+    // Optional: you can add code here for what should happen on subsequent loads
+    console.log("First time setup already done.");
+}
+
+addTemplates();
+populateMainDiv()

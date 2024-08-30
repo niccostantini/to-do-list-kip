@@ -24,7 +24,5 @@ function generateId() {
     return checkExistence(result);
 }
 
-// Example usage:
-console.log(generateId());
 
 export {generateId};

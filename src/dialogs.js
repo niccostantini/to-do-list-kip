@@ -1,4 +1,6 @@
 import { generateId } from "./generateIds.js";
+import { createProjectFromForm } from "./data.js";
+import { populateMainDiv } from "./projects.js";
 
 let taskNumber = 0;
 
@@ -89,8 +91,8 @@ function createProjectDialog() {
 
         const taskIdBox = document.createElement('input');
         taskIdBox.type = 'text';
-        taskIdBox.id = 'taskId';
-        taskIdBox.name = 'taskId';
+        taskIdBox.id = `taskId-${taskNumber}`;
+        taskIdBox.name = `taskId-${taskNumber}`;
         taskIdBox.required = true;
         taskIdBox.hidden = true;
         taskIdBox.value = taskId;
@@ -209,6 +211,12 @@ function createProjectDialog() {
     createProjectButton.id = 'addProjectSubmit';
     createProjectButton.textContent = 'Create Project';
     formButtonsDiv.appendChild(createProjectButton);
+
+    createProjectButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        createProjectFromForm();
+        populateMainDiv();
+    })
 
     const cancelProjectButton = document.createElement('button');
     cancelProjectButton.type = 'button';

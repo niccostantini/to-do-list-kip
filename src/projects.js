@@ -12,7 +12,7 @@ const Task = function (id, title, priority, dueDate, description, toDos = []) {
     this.priority = priority;
     this.dueDate = dueDate;
     this.description = description;
-    this.toDos = toDos;
+    this.checkList = toDos;
 }
 
 // Define a method for adding a toDo to the task
@@ -53,11 +53,19 @@ function populateMainDiv() {
     mainDiv.innerHTML = ''; // Clear existing content
 
     // Retrieve all keys from localStorage
-    const projectKeys = Object.keys(localStorage);
+    const projectKeys = Object.keys(localStorage).filter(key => key !== "firstTime");
+    
+            /** */
+            console.log(projectKeys)
+            /** */
 
     // Iterate over each project key
     projectKeys.forEach(key => {
         const project = JSON.parse(localStorage.getItem(key));
+
+        /** */
+        console.log(JSON.parse(localStorage.getItem(key)))
+        /** */
 
         // Create the project container
         const projectDiv = document.createElement('div');
@@ -201,4 +209,4 @@ function populateMainDiv() {
 }
 
 
-export {populateMainDiv, Project}
+export {populateMainDiv, Project, Task, ToDo}
