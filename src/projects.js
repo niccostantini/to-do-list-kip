@@ -1,4 +1,5 @@
 import { deleteTask, deleteProject, changeBoxStatus } from "./data";
+import { editProjectDialog } from "./dialogs";
 import { remainingTime } from "./timeCalculations";
 
 const ToDo = function (id, status, label) {
@@ -55,18 +56,10 @@ function populateMainDiv() {
 
     // Retrieve all keys from localStorage
     const projectKeys = Object.keys(localStorage).filter(key => key !== "firstTime");
-    
-            /** */
-            console.log(projectKeys)
-            /** */
 
     // Iterate over each project key
     projectKeys.forEach(key => {
         const project = JSON.parse(localStorage.getItem(key));
-
-        /** */
-        console.log(JSON.parse(localStorage.getItem(key)))
-        /** */
 
         // Create the project container
         const projectDiv = document.createElement('div');
@@ -87,13 +80,13 @@ function populateMainDiv() {
         deleteProjectButton.title = 'Delete project';
         deleteProjectButton.className = `delete ${project.id}`
 
-        const headerDiv = document.createElement('div');
-        headerDiv.className = "headerDiv";
+        const projectDetails = document.createElement('div');
+        projectDetails.className = "projectDetails";
 
-        headerDiv.appendChild(projectTitle);
-        headerDiv.appendChild(projectDescription);
+        projectDetails.appendChild(projectTitle);
+        projectDetails.appendChild(projectDescription);
 
-        projectHeader.appendChild(headerDiv);
+        projectHeader.appendChild(projectDetails);
 
         projectHeader.appendChild(deleteProjectButton);
 
@@ -115,7 +108,6 @@ function populateMainDiv() {
         project.tasks.forEach((task, taskIndex) => {
             const taskDiv = document.createElement('div');
             taskDiv.classList.add('task');
-            taskDiv.classList.add('collapsed');
             taskDiv.id = `${task.id}`; // Unique ID for the task
 
             const taskHeader = document.createElement('header');
@@ -210,11 +202,24 @@ function populateMainDiv() {
             const taskButtons = document.createElement('div');
             taskButtons.classList.add('button');
 
+            /** EDIT TASK */
+
             const editButton = document.createElement('input');
             editButton.type = 'button';
             editButton.value = '✍🏼';
             editButton.title = 'Edit';
             editButton.classList.add('edit');
+
+            //Add event listener
+            
+            editButton.addEventListener("click", (e) => {
+                const projectId = e.target.closest(".project").id;
+                const dialog = editProjectDialog(projectId);
+                document.body.appendChild(dialog);
+                dialog.showModal();
+            })
+
+            /** DELETE TASK  */
 
             const deleteButton = document.createElement('input');
             deleteButton.type = 'button';
@@ -222,8 +227,7 @@ function populateMainDiv() {
             deleteButton.title = 'Delete task';
             deleteButton.classList.add('delete');
 
-
-            /** DELETE TASK  */
+            //Add event listener
             deleteButton.addEventListener('click', () => {
 
                 const userConfirmed = window.confirm("Are you sure you want to delete this task?");

@@ -241,7 +241,9 @@ function createProjectDialog() {
     return dialog;
 }
 
-function editProjectDialog() {
+
+
+function editProjectDialog(input = '') {
 
     const dialog = document.createElement('dialog');
     dialog.id = 'editProjectDialog';
@@ -268,9 +270,8 @@ function editProjectDialog() {
     // Create the placeholder option
     const placeholderOption = document.createElement('option');
     placeholderOption.textContent = 'Please select an option';
-    placeholderOption.value = '';
+    placeholderOption.value = null;
     placeholderOption.disabled = true;
-    placeholderOption.selected = true;
 
     // Add the placeholder option to the select element
     selectProject.appendChild(placeholderOption);
@@ -309,10 +310,6 @@ function editProjectDialog() {
 
             /*** CREATE TASK FIELDS */
             displayTask(project)
-            
-            
-
-
         }
 
     })
@@ -542,10 +539,25 @@ function editProjectDialog() {
     form.appendChild(formButtonsDiv);
     dialog.appendChild(form);
 
-    document.body.appendChild(dialog);
-    dialog.showModal();
+        // Function to populate fields based on selected project ID
+        function populateFields(projectId) {
+            const project = JSON.parse(localStorage.getItem(projectId));
+            if (project) {
+                titleInput.value = project.title;
+                descriptionTextarea.value = project.description;
+                projectIdBox.value = project.id;
+                displayTask(project);
+            }
+        }
 
-    // return dialog;
+        if (input !== '') {
+            selectProject.value = input; // Select the project in the dropdown
+            populateFields(input); // Populate the form fields
+        }
+
+    return dialog;
 }
+
+
 
 export {createProjectDialog, editProjectDialog};
