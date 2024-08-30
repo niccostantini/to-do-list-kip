@@ -75,7 +75,7 @@ const templateProjects =
         {
           "id": "so7qcf",
           "title": "Implement API",
-          "dueDate": "2024-12-01",
+          "dueDate": "2022-12-01",
           "priority": "Low",
           "description": "Integrate with the backend API",
           "checkList": [

@@ -12,7 +12,7 @@ const addButton = document.querySelector('#addButton');
 const addProjectButton = document.querySelector('.addProjectButton');
 const addTaskButton = document.querySelector('.addTaskButton');
 const addButtons = document.querySelectorAll("#addButton, .addProjectButton, .addTaskButton")
-const taskHeaders = document.querySelectorAll(".task > header");
+// const taskHeaders = document.querySelectorAll(".task > header");
 
 
 // Add listeners for add button graphics
@@ -29,10 +29,10 @@ addButtons.forEach(button => button.addEventListener("mouseout", () => {
     addTaskButton.classList.remove("showAddTask");
 }))
 
-taskHeaders.forEach(taskHeader => taskHeader.addEventListener("click", (event) => {
-    const clickedTask = event.currentTarget.closest('.task')
-    clickedTask.classList.toggle("collapsed")
-}))
+// taskHeaders.forEach(taskHeader => taskHeader.addEventListener("click", (event) => {
+//     const clickedTask = event.currentTarget.closest('.task')
+//     clickedTask.classList.toggle("collapsed")
+// }))
 
 // if (localStorage.length !== 0) addTemplates(templateProjects);
 // else populateMainDiv()

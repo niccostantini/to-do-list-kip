@@ -260,6 +260,11 @@ body::after {
     grid-area: header;
     padding-right: 5px;
     background-color: var(--stickNote-task-title-color);
+    transition: background-color 0.2s ease;
+}
+
+.task header:hover {
+    background-color: rgb(208, 188, 71)
 }
 
 .task header > span {
@@ -270,7 +275,6 @@ body::after {
 
 .task header > h4 {
     padding: 3px 10px;
-
 }
 
 .task header > .highPriority {
@@ -319,6 +323,10 @@ body::after {
     text-align: right;
 }
 
+p.expired {
+    color: red;
+}
+
 .button input[type="button"] {
 
 }
@@ -336,3 +344,19 @@ label {
 dialog {
     z-index: 4;
 }
+
+dialog * {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+}
+
+dialog input[type="text"] {
+    width: 300px;
+}
+
+dialog textarea {
+    width: 300px;
+}
+

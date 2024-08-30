@@ -105,6 +105,7 @@ function populateMainDiv() {
         project.tasks.forEach((task, taskIndex) => {
             const taskDiv = document.createElement('div');
             taskDiv.classList.add('task');
+            taskDiv.classList.add('collapsed');
             taskDiv.id = `${task.id}`; // Unique ID for the task
 
             const taskHeader = document.createElement('header');
@@ -172,20 +173,26 @@ function populateMainDiv() {
             const expiresIn = document.createElement('p');
             let timeRemaining = remainingTime(task.dueDate);
             console.log(timeRemaining);
-
             let timeRemainingString = "";
-            for (let key in timeRemaining) {
-                // Access the value using timeRemaining[key]
-                const value = timeRemaining[key];
-                timeRemainingString =
-                    `${timeRemainingString} \n
-                    ${-value} ${key}`;
-                console.log(timeRemainingString);
+
+            if(timeRemaining.days < 0) {
+                for (let key in timeRemaining) {
+                    // Access the value using timeRemaining[key]
+                    const value = timeRemaining[key];
+                    timeRemainingString =
+                        `${timeRemainingString} \n
+                        ${-value} ${key}`;
+                    console.log(timeRemainingString);
+                }
+
+                expiresIn.textContent = 
+                `Expires in:\n
+                ${timeRemainingString}`; // Replace with actual logic
+            } else {
+                expiresIn.textContent = "Overdue!"
+                expiresIn.classList.add("expired")
             }
 
-            expiresIn.textContent = 
-            `Expires in:\n
-            ${timeRemainingString}`; // Replace with actual logic
             console.log(task.dueDate)
             taskDeadlines.appendChild(expiresIn);
 
@@ -223,6 +230,13 @@ function populateMainDiv() {
         projectDiv.appendChild(contentSection);
         mainDiv.appendChild(projectDiv);
     });
+
+    const taskHeaders = document.querySelectorAll(".task > header");
+    taskHeaders.forEach(taskHeader => taskHeader.addEventListener("click", (event) => {
+        const clickedTask = event.currentTarget.closest('.task')
+        clickedTask.classList.toggle("collapsed")
+    }))
+
 }
 
 
