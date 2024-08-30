@@ -370,6 +370,33 @@ label {
 
 dialog {
     z-index: 4;
+    padding: 0;
+    border-radius: 6px;
+    max-height: 600px;
+    overflow-x: hidden;
+}
+
+dialog form {
+    display: grid;
+    grid-template-rows: 40px 1fr 30px;
+    grid-template-columns: 1fr;
+
+}
+
+dialog form > div {
+    padding: 10px 10px 0px 10px;
+}
+
+dialog .formTitleDiv {
+    height: 100%;
+    width: 100%;
+    justify-content: space-evenly;
+    background-color: var(--color2);
+    color: white;
+}
+
+dialog .formDiv {
+    overflow: scroll;
 }
 
 dialog * {
@@ -378,6 +405,7 @@ dialog * {
     align-items: flex-start;
     width: fit-content;
 }
+
 
 dialog input[type="text"] {
     width: 300px;
