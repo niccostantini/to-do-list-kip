@@ -529,7 +529,7 @@ function editProjectDialog() {
 
     saveProject.addEventListener("click", (e) => {
         e.preventDefault();
-        createProjectFromForm();
+        createProjectFromForm(e);
         populateMainDiv();
     })
 

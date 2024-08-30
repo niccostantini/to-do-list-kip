@@ -162,11 +162,19 @@ function addProject(project) {
 
 }
 
-function createProjectFromForm() {
+function createProjectFromForm(e) {
 
     let count = 1;
     
-    const form = document.querySelector("dialog#addProjectDialog form");
+    const createForm = document.querySelector("dialog#addProjectDialog form");
+    const editForm = document.querySelector("dialog#editProjectDialog form");
+
+    let form;
+
+    const button = e.target.id;
+
+    if (button == 'addProjectSubmit') {form = createForm}
+    else if (button == 'saveProject') {form = editForm};
 
     const formData = new FormData(form);
 
@@ -181,7 +189,7 @@ function createProjectFromForm() {
 
     console.log(newProject)
 
-    const newTaskFieldsets = document.querySelectorAll("dialog#addProjectDialog form fieldset");
+    const newTaskFieldsets = form.querySelectorAll("fieldset");
 /**ADD CONDITION TO RUN THE FOREACH ONLY IF IT IS NOT EMPTY */
     newTaskFieldsets.forEach(taskFieldset => {
         let taskId = `taskId-${count}`
