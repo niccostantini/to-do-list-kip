@@ -1,4 +1,5 @@
 import { deleteTask, deleteProject, changeBoxStatus } from "./data";
+import { remainingTime } from "./timeCalculations";
 
 const ToDo = function (id, status, label) {
     this.id = id;
@@ -169,7 +170,23 @@ function populateMainDiv() {
 
             // Assuming you have logic to calculate "Expires in"
             const expiresIn = document.createElement('p');
-            expiresIn.textContent = `Expires in: X days`; // Replace with actual logic
+            let timeRemaining = remainingTime(task.dueDate);
+            console.log(timeRemaining);
+
+            let timeRemainingString = "";
+            for (let key in timeRemaining) {
+                // Access the value using timeRemaining[key]
+                const value = timeRemaining[key];
+                timeRemainingString =
+                    `${timeRemainingString} \n
+                    ${-value} ${key}`;
+                console.log(timeRemainingString);
+            }
+
+            expiresIn.textContent = 
+            `Expires in:\n
+            ${timeRemainingString}`; // Replace with actual logic
+            console.log(task.dueDate)
             taskDeadlines.appendChild(expiresIn);
 
             const taskButtons = document.createElement('div');
