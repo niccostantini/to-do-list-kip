@@ -96,6 +96,7 @@ body::after {
 #main {
     grid-column: 3 / 4;
     grid-row: 3 / 4;
+    overflow-y: scroll;
 
     display: grid;
     grid-template-rows: repeat(auto-fit, minmax(350px, 370px));
@@ -207,6 +208,27 @@ body::after {
 
 }
 
+.projectTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:flex-start;
+}
+
+.projectTitle input {
+    padding: 1.88px 5px;
+    margin: 1px;
+    font-weight: 900;
+    color: white;
+    background-color: var(--highPriorityBg);
+    border: 0.5px solid var(--highPriorityBorder);
+    cursor: pointer;
+}
+
+.projectTitle input:hover {
+    background-color: rgb(221, 87, 87);
+}
+
 .project .projectTitle {
     padding: 10px 10px 5px 10px;
 }
@@ -227,7 +249,7 @@ body::after {
     overflow: hidden;
     transition: max-height 0.4s ease;
     grid-template-columns: 2.5fr 1fr;
-    grid-template-rows: 32px minmax(0,100px) 30px;
+    grid-template-rows: 32px minmax(0,100px) 40px;
     grid-template-areas:
     "header header"
     "description deadlines"
@@ -321,6 +343,11 @@ body::after {
     justify-content: flex-end;
     grid-area: button;
     text-align: right;
+    padding-right: 5px;
+}
+
+.button input {
+    padding: 3px 4px;
 }
 
 p.expired {
