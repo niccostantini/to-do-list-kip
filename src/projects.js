@@ -99,7 +99,10 @@ function populateMainDiv() {
 
         //Add event listener
         deleteProjectButton.addEventListener('click', (e) => {
-            deleteProject(e)
+            const userConfirmed = window.confirm("Are you sure you want to delete this project?");
+
+            if (userConfirmed == true) {deleteProject(e)}
+            
         })
 
         projectDiv.appendChild(projectHeader);
@@ -222,8 +225,15 @@ function populateMainDiv() {
 
             /** DELETE TASK  */
             deleteButton.addEventListener('click', () => {
-                deleteTask(task.id, project.id);
-                populateMainDiv(); // Re-populate the main div after deletion
+
+                const userConfirmed = window.confirm("Are you sure you want to delete this task?");
+
+                if (userConfirmed == true) {
+                    deleteTask(task.id, project.id);
+                    populateMainDiv(); // Re-populate the main div after deletion
+                }
+
+
             });
 
             taskButtons.appendChild(editButton);
