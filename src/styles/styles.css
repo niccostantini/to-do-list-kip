@@ -204,7 +204,7 @@ body::after {
     grid-template-rows: 1fr 5fr;
     grid-template-columns: 1fr;
     margin: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.428);
 
 }
 
