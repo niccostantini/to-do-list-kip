@@ -201,7 +201,7 @@ body::after {
     border: none;
     background-color: var(--stickNote-color);
     display: grid;
-    grid-template-rows: 1fr 5fr;
+    grid-template-rows: 60px 1fr;
     grid-template-columns: 1fr;
     margin: 10px;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.428);
@@ -223,6 +223,12 @@ body::after {
     background-color: var(--highPriorityBg);
     border: 0.5px solid var(--highPriorityBorder);
     cursor: pointer;
+    justify-self: right;
+}
+
+.projectTitle span {
+    font-size: small;
+    max-width: 250px;
 }
 
 .projectTitle input:hover {

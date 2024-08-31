@@ -74,11 +74,30 @@ function populateMainDiv() {
         projectTitle.textContent = project.title;
         const projectDescription = document.createElement('span');
         projectDescription.textContent = project.description;
+
         const deleteProjectButton = document.createElement('input');
         deleteProjectButton.type = 'button';
         deleteProjectButton.value = '✖';
         deleteProjectButton.title = 'Delete project';
         deleteProjectButton.className = `delete ${project.id}`
+
+        /** EDIT PROJECT */
+
+        const editButton = document.createElement('input');
+        editButton.type = 'button';
+        editButton.value = '✍🏼';
+        editButton.title = 'Edit';
+        editButton.classList.add('edit');
+
+        //Add event listener
+        
+        editButton.addEventListener("click", (e) => {
+            const projectId = e.target.closest(".project").id;
+            const dialog = editProjectDialog(projectId);
+            console.log(`${projectId} is the ID for the project to be edited`)
+            document.body.appendChild(dialog);
+            dialog.showModal();
+        })
 
         const projectDetails = document.createElement('div');
         projectDetails.className = "projectDetails";
@@ -88,7 +107,13 @@ function populateMainDiv() {
 
         projectHeader.appendChild(projectDetails);
 
-        projectHeader.appendChild(deleteProjectButton);
+        const headerButtons = document.createElement('div');
+        headerButtons.className = "headerButtons";
+
+        headerButtons.appendChild(editButton);
+        headerButtons.appendChild(deleteProjectButton);
+
+        projectHeader.appendChild(headerButtons)
 
         //Add event listener
         deleteProjectButton.addEventListener('click', (e) => {
@@ -197,24 +222,6 @@ function populateMainDiv() {
             const taskButtons = document.createElement('div');
             taskButtons.classList.add('button');
 
-            /** EDIT TASK */
-
-            const editButton = document.createElement('input');
-            editButton.type = 'button';
-            editButton.value = '✍🏼';
-            editButton.title = 'Edit';
-            editButton.classList.add('edit');
-
-            //Add event listener
-            
-            editButton.addEventListener("click", (e) => {
-                const projectId = e.target.closest(".project").id;
-                const dialog = editProjectDialog(projectId);
-                console.log(`${projectId} is the ID for the project to be edited`)
-                document.body.appendChild(dialog);
-                dialog.showModal();
-            })
-
             /** DELETE TASK  */
 
             const deleteButton = document.createElement('input');
@@ -236,7 +243,6 @@ function populateMainDiv() {
 
             });
 
-            taskButtons.appendChild(editButton);
             taskButtons.appendChild(deleteButton);
 
             taskDiv.appendChild(taskHeader);
