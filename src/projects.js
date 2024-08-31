@@ -147,8 +147,6 @@ function populateMainDiv() {
                     let taskId = e.target.closest('.task').id;
                     let checkboxId = e.target.id;
 
-                    console.log(`${checkboxId}, ${taskId}, ${projectId}`)
-
                     changeBoxStatus(checkboxId, taskId, projectId)
 
                 })
@@ -175,7 +173,6 @@ function populateMainDiv() {
             // Assuming you have logic to calculate "Expires in"
             const expiresIn = document.createElement('p');
             let timeRemaining = remainingTime(task.dueDate);
-            console.log(timeRemaining);
             let timeRemainingString = "";
 
             if(timeRemaining.days < 0) {
@@ -185,7 +182,6 @@ function populateMainDiv() {
                     timeRemainingString =
                         `${timeRemainingString} \n
                         ${-value} ${key}`;
-                    console.log(timeRemainingString);
                 }
 
                 expiresIn.textContent = 
@@ -196,7 +192,6 @@ function populateMainDiv() {
                 expiresIn.classList.add("expired")
             }
 
-            console.log(task.dueDate)
             taskDeadlines.appendChild(expiresIn);
 
             const taskButtons = document.createElement('div');
@@ -215,6 +210,7 @@ function populateMainDiv() {
             editButton.addEventListener("click", (e) => {
                 const projectId = e.target.closest(".project").id;
                 const dialog = editProjectDialog(projectId);
+                console.log(`${projectId} is the ID for the project to be edited`)
                 document.body.appendChild(dialog);
                 dialog.showModal();
             })

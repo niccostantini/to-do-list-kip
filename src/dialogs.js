@@ -183,6 +183,7 @@ function createProjectDialog() {
         //Delete the fieldset relative to the task to be deleted
         deleteTaskButton.addEventListener("click", (e) => {
             e.target.closest("fieldset").remove();
+            taskNumber--;
         })
 
         // taskTemplate.appendChild(fieldset);
@@ -204,7 +205,7 @@ function createProjectDialog() {
     tasksSection.appendChild(addTaskButton);
 
     addTaskButton.addEventListener("click", () => {
-        displayTasks(generateTasksDiv)
+        displayTasks(generateTasksDiv);
     })
 
     formDiv.appendChild(tasksSection);
@@ -225,8 +226,10 @@ function createProjectDialog() {
 
     createProject.addEventListener("click", (e) => {
         e.preventDefault();
-        createProjectFromForm();
+        createProjectFromForm(e);
         populateMainDiv();
+        resetDialog(form)
+        e.target.closest('dialog').close();
     })
 
     const cancelProjectButton = document.createElement('button');
@@ -296,7 +299,7 @@ function editProjectDialog(input = '') {
     formDiv.appendChild(selectProject)
     selectProject.addEventListener("change", (e) => {
         let value = e.target.value;
-        if (selectProject.value == "") {}
+        if (selectProject.value == "") {console.log("The value for project ID is: " + selectProject.value)}
         else {
             project = JSON.parse(localStorage.getItem(value));
             console.log(project);
@@ -417,6 +420,7 @@ function editProjectDialog(input = '') {
             function convertToString(checkList) {
                 return checkList.map(item => item.label).join('; ');
             }
+
             let result = convertToString(task.checkList);  
             
             taskChecklistInput.value = result;
@@ -433,6 +437,7 @@ function editProjectDialog(input = '') {
             //Delete the fieldset relative to the task to be deleted
             deleteTaskButton.addEventListener("click", (e) => {
                 e.target.closest("fieldset").remove();
+                taskNumber--;
             })
         
 
@@ -508,6 +513,125 @@ function editProjectDialog(input = '') {
     generateTasksDiv.className = 'generateTasksDiv';
     tasksSection.appendChild(generateTasksDiv);
 
+    function displayTasks(generateTasksDiv) {
+
+        taskNumber++;
+
+        const taskId = generateId();
+        const fieldset = document.createElement('fieldset');
+        
+        const legend = document.createElement('legend');
+        legend.innerHTML = `Task <span class="task-number">${taskNumber}</span>`;
+        fieldset.appendChild(legend);
+
+        // Task Title
+        const taskTitleLabel = document.createElement('label');
+        taskTitleLabel.setAttribute('for', `taskTitle-${taskNumber}`);
+        taskTitleLabel.textContent = 'Task Title';
+        fieldset.appendChild(taskTitleLabel);
+
+        const taskIdBox = document.createElement('input');
+        taskIdBox.type = 'text';
+        taskIdBox.id = `taskId-${taskNumber}`;
+        taskIdBox.name = `taskId-${taskNumber}`;
+        taskIdBox.required = true;
+        taskIdBox.hidden = true;
+        taskIdBox.value = taskId;
+        fieldset.appendChild(taskIdBox);
+
+        const taskTitleInput = document.createElement('input');
+        taskTitleInput.type = 'text';
+        taskTitleInput.id = `taskTitle-${taskNumber}`;
+        taskTitleInput.name = `taskTitle-${taskNumber}`;
+        taskTitleInput.required = true;
+        fieldset.appendChild(taskTitleInput);
+
+        // Task Priority
+        const taskPriorityLabel = document.createElement('label');
+        taskPriorityLabel.setAttribute('for', `taskPriority-${taskNumber}`);
+        taskPriorityLabel.textContent = 'Priority';
+        fieldset.appendChild(taskPriorityLabel);
+
+        const taskPrioritySelect = document.createElement('select');
+        taskPrioritySelect.id = `taskPriority-${taskNumber}`;
+        taskPrioritySelect.name = `taskPriority-${taskNumber}`;
+        taskPrioritySelect.required = true;
+        ['high', 'medium', 'low'].forEach(priority => {
+            const option = document.createElement('option');
+            option.value = priority.toLowerCase();
+            option.textContent = priority;
+            taskPrioritySelect.appendChild(option);
+        });
+        fieldset.appendChild(taskPrioritySelect);
+
+        // Task Description
+        const taskDescriptionLabel = document.createElement('label');
+        taskDescriptionLabel.setAttribute('for', `taskDescription-${taskNumber}`);
+        taskDescriptionLabel.textContent = 'Task Description';
+        fieldset.appendChild(taskDescriptionLabel);
+
+        const taskDescriptionTextarea = document.createElement('textarea');
+        taskDescriptionTextarea.id = `taskDescription-${taskNumber}`;
+        taskDescriptionTextarea.name = `taskDescription-${taskNumber}`;
+        taskDescriptionTextarea.rows = 3;
+        taskDescriptionTextarea.required = true;
+        fieldset.appendChild(taskDescriptionTextarea);
+
+        // Task Due Date
+        const taskDueDateLabel = document.createElement('label');
+        taskDueDateLabel.setAttribute('for', `taskDueDate-${taskNumber}`);
+        taskDueDateLabel.textContent = 'Task Due Date';
+        fieldset.appendChild(taskDueDateLabel);
+
+        const taskDueDateInput = document.createElement('input');
+        taskDueDateInput.type = 'date';
+        taskDueDateInput.id = `taskDueDate-${taskNumber}`;
+        taskDueDateInput.name = `taskDueDate-${taskNumber}`;
+        taskDueDateInput.required = true;
+        fieldset.appendChild(taskDueDateInput);
+
+        // Task ToDo's
+        /**    IN THE FUNCTION THAT APPENDS THE DATA IN LOCALSTORAGE, AN ID MUST BE GIVE TO ALL TODOS     */
+        const taskChecklistLabel = document.createElement('label');
+        taskChecklistLabel.setAttribute('for', `taskChecklist-${taskNumber}`);
+        taskChecklistLabel.textContent = "ToDo's";
+        fieldset.appendChild(taskChecklistLabel);
+
+        const taskChecklistInput = document.createElement('input');
+        taskChecklistInput.type = 'text';
+        taskChecklistInput.id = `taskChecklist-${taskNumber}`;
+        taskChecklistInput.name = `taskChecklist-${taskNumber}`;
+        taskChecklistInput.placeholder = 'Separate items by semicolons';
+        taskChecklistInput.required = true;
+        fieldset.appendChild(taskChecklistInput);
+
+        // Delete Task Button
+        const deleteTaskButton = document.createElement('button');
+        deleteTaskButton.type = 'button';
+        deleteTaskButton.className = 'deleteTaskButton';
+        deleteTaskButton.textContent = 'Delete Task';
+        fieldset.appendChild(deleteTaskButton);
+
+        //Delete the fieldset relative to the task to be deleted
+        deleteTaskButton.addEventListener("click", (e) => {
+            e.target.closest("fieldset").remove();
+        })
+
+        // taskTemplate.appendChild(fieldset);
+        generateTasksDiv.appendChild(fieldset);
+    }
+
+        // Add Task Button
+        const addTaskButton = document.createElement('button');
+        addTaskButton.type = 'button';
+        addTaskButton.id = 'addTaskButton';
+        addTaskButton.textContent = 'Add Task';
+        tasksSection.appendChild(addTaskButton);
+    
+        addTaskButton.addEventListener("click", () => {
+            displayTasks(generateTasksDiv)
+        })
+
     formDiv.appendChild(tasksSection);
 
     formDiv.appendChild(document.createElement('hr'));
@@ -526,8 +650,16 @@ function editProjectDialog(input = '') {
 
     saveProject.addEventListener("click", (e) => {
         e.preventDefault();
+        console.log("prevented default behaviour of button");
         createProjectFromForm(e);
+        console.log("Creating project from form");
         populateMainDiv();
+        console.log("Repopulated main");
+        resetDialog(form)
+        console.log("dialog reset");
+        e.target.closest('dialog').close();
+        console.log("closed dialog");
+        e.target.closest('dialog').remove();
     })
 
     const cancelProjectButton = document.createElement('button');
@@ -539,23 +671,29 @@ function editProjectDialog(input = '') {
     form.appendChild(formButtonsDiv);
     dialog.appendChild(form);
 
-        // Function to populate fields based on selected project ID
-        function populateFields(projectId) {
-            const project = JSON.parse(localStorage.getItem(projectId));
-            if (project) {
-                titleInput.value = project.title;
-                descriptionTextarea.value = project.description;
-                projectIdBox.value = project.id;
-                displayTask(project);
-            }
+    // Function to populate fields based on selected project ID
+    function populateFields(projectId) {
+        const project = JSON.parse(localStorage.getItem(projectId));
+        if (project) {
+            titleInput.value = project.title;
+            descriptionTextarea.value = project.description;
+            projectIdBox.value = project.id;
+            displayTask(project);
         }
+    }
 
-        if (input !== '') {
-            selectProject.value = input; // Select the project in the dropdown
-            populateFields(input); // Populate the form fields
-        }
+    if (input !== '') {
+        selectProject.value = input; // Select the project in the dropdown
+        populateFields(input); // Populate the form fields
+    }
 
     return dialog;
+}
+
+function resetDialog(form) {
+    form.reset(); // Reset all fields
+    taskNumber = 0; // Reset any counters or state
+    form.querySelector('.generateTasksDiv').innerHTML = '';
 }
 
 

@@ -160,7 +160,10 @@ function addProject(project) {
     const stringedProject = JSON.stringify(project);
     localStorage.setItem(project.id, stringedProject);
 
+    console.log(`Project edited: ${project.id}`)
+
 }
+
 
 function createProjectFromForm(e) {
 
@@ -171,11 +174,11 @@ function createProjectFromForm(e) {
 
     let form;
 
+    //Choose which form to use
     const button = e.target.id;
-
     if (button == 'addProjectSubmit') {form = createForm}
     else if (button == 'saveProject') {form = editForm};
-
+    
     const formData = new FormData(form);
 
     let projectTasks = [];
@@ -187,7 +190,13 @@ function createProjectFromForm(e) {
         projectTasks
     )
 
-    console.log(newProject)
+    console.log(formData.get("projectId"),
+                formData.get("projectTitle"),
+                formData.get("projectDescription"))
+    console.log(formData)
+
+    console.log(form);
+    console.log(Array.from(formData.entries()));
 
     const newTaskFieldsets = form.querySelectorAll("fieldset");
 /**ADD CONDITION TO RUN THE FOREACH ONLY IF IT IS NOT EMPTY */
@@ -197,8 +206,8 @@ function createProjectFromForm(e) {
         let taskPriority = `taskPriority-${count}`;
         let taskDueDate = `taskDueDate-${count}`;
         let taskDescription = `taskDescription-${count}`;
-        let taskToDosUnparsed = formData.get(`taskChecklist-${count}`);
-        let taskToDosParsed = createToDos(taskToDosUnparsed);
+        let taskToDosUnparsed = formData.get(`taskChecklist-${count}`); //prepare the data for todos
+        let taskToDosParsed = createToDos(taskToDosUnparsed); //prepare the data for todos
 
         const newTask = new Task(
             formData.get(taskId),
@@ -213,8 +222,6 @@ function createProjectFromForm(e) {
 
         newProject.tasks.push(newTask)
     })  
-
-    console.log(newProject)
 
     addProject(newProject)
 

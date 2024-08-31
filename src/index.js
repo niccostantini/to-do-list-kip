@@ -5,7 +5,7 @@ import "./assets/images/corkbg_2.png";
 
 import {templateProjects, addTemplates} from "./data.js"
 import { populateMainDiv } from "./projects.js";
-import { createProjectDialog } from "./dialogs.js";
+import { createProjectDialog, editProjectDialog } from "./dialogs.js";
 
 
 const addButton = document.querySelector('#addButton');
@@ -56,4 +56,4 @@ if (!localStorage.getItem("firstTime")) {
 }
 
 addTemplates();
-populateMainDiv()
+populateMainDiv();
