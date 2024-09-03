@@ -206,6 +206,7 @@ function createProjectFromForm(e) {
         let taskPriority = `taskPriority-${count}`;
         let taskDueDate = `taskDueDate-${count}`;
         let taskDescription = `taskDescription-${count}`;
+        console.log((`taskChecklist-${count}`))
         let taskToDosUnparsed = formData.get(`taskChecklist-${count}`); //prepare the data for todos
         let taskToDosParsed = createToDos(taskToDosUnparsed); //prepare the data for todos
 
