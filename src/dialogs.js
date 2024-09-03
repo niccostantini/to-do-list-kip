@@ -184,6 +184,50 @@ function createProjectDialog() {
         deleteTaskButton.addEventListener("click", (e) => {
             e.target.closest("fieldset").remove();
             taskNumber--;
+            const taskNumberSpans = document.querySelectorAll(".task-number");
+            console.log(`Task number: ${taskNumber} - Span number ${taskNumberSpans.length}`)
+
+            let i = 1
+            taskNumberSpans.forEach(span => {
+                
+                    console.log(i)
+                    span.textContent = i;
+
+                    taskTitleLabel.setAttribute('for', `taskTitle-${i}`);
+
+                    taskIdBox.id = `taskId-${i}`;
+                    taskIdBox.name = `taskId-${i}`;
+            
+                    taskTitleInput.id = `taskTitle-${i}`;
+                    taskTitleInput.name = `taskTitle-${i}`;
+            
+                    taskPriorityLabel.setAttribute('for', `taskPriority-${i}`);
+            
+                    taskPrioritySelect.id = `taskPriority-${i}`;
+                    taskPrioritySelect.name = `taskPriority-${i}`;
+            
+                    taskDescriptionLabel.setAttribute('for', `taskDescription-${i}`);
+            
+                    taskDescriptionTextarea.id = `taskDescription-${i}`;
+                    taskDescriptionTextarea.name = `taskDescription-${i}`;
+            
+                    taskDueDateLabel.setAttribute('for', `taskDueDate-${i}`);
+            
+                    taskDueDateInput.id = `taskDueDate-${i}`;
+                    taskDueDateInput.name = `taskDueDate-${i}`;
+            
+                    taskChecklistLabel.setAttribute('for', `taskChecklist-${i}`);
+            
+                    taskChecklistInput.id = `taskChecklist-${i}`;
+                    taskChecklistInput.name = `taskChecklist-${i}`;
+
+                    console.log(taskChecklistInput.name);
+            
+
+
+                    i++
+            })
+
         })
 
         // taskTemplate.appendChild(fieldset);
@@ -270,11 +314,13 @@ function editProjectDialog(input = '') {
     formDiv.className = 'formDiv'
 
     const selectProject = document.createElement('select')
+    selectProject.multiple = true;
     // Create the placeholder option
     const placeholderOption = document.createElement('option');
-    placeholderOption.textContent = 'Please select an option';
+    placeholderOption.textContent = 'Please select a project';
     placeholderOption.value = null;
     placeholderOption.disabled = true;
+    selectProject.classList = "selectProject"
 
     // Add the placeholder option to the select element
     selectProject.appendChild(placeholderOption);
@@ -487,6 +533,7 @@ function editProjectDialog(input = '') {
     descriptionTextarea.name = 'projectDescription';
     descriptionTextarea.rows = 3;
     descriptionTextarea.required = true;
+    descriptionTextarea.maxLength = 40;
     formDiv.appendChild(descriptionTextarea);
 
     formDiv.appendChild(document.createElement('hr'));
@@ -522,6 +569,11 @@ function editProjectDialog(input = '') {
         
         const legend = document.createElement('legend');
         legend.innerHTML = `Task <span class="task-number">${taskNumber}</span>`;
+
+        const legendSpan = legend.querySelector("span");
+
+        console.log(legendSpan)
+
         fieldset.appendChild(legend);
 
         // Task Title
