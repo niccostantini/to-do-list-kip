@@ -87,6 +87,38 @@ body::after {
     padding-bottom: 5px;
 }
 
+.formDiv {
+    outline: none;
+}
+
+form:focus {
+    outline: none;
+}
+
+svg {
+    height: 25px;
+}
+
+svg path {
+    fill: white;
+    transition: all 0.2s ease;
+}
+
+#sidebar .menuElement:hover svg path {
+    fill: var(--color2);
+}
+
+#sidebar .menuElement {
+    display: flex;
+    align-items: center;
+    font-weight: 100;
+}
+
+#sidebar .menuElement span {
+    padding-top: 2px;
+    padding-left: 5px;
+}
+
 #sidebar .menuElement:hover {
     background-color: var(--color3);
     color: var(--color2);
@@ -215,24 +247,42 @@ body::after {
     align-items:flex-start;
 }
 
-.projectTitle input {
+.projectTitle input.delete {
     padding: 1.88px 5px;
     margin: 1px;
     font-weight: 900;
     color: white;
     background-color: var(--highPriorityBg);
     border: 0.5px solid var(--highPriorityBorder);
+    border-radius: 5px;
     cursor: pointer;
     justify-self: right;
+}
+
+.projectTitle input.delete:hover {
+    background-color: rgb(221, 87, 87);
+}
+
+.projectTitle input.edit {
+    padding: 1.88px 5px;
+    margin: 1px;
+    font-weight: 900;
+    color: white;
+    background-color: var(--color3);
+    border: 0.5px solid var(--color2);
+    border-radius: 5px;
+    cursor: pointer;
+    justify-self: right;
+}
+
+.projectTitle input.edit:hover {
+    background-color: rgb(147, 193, 246);
 }
 
 .projectTitle span {
     font-size: small;
     max-width: 250px;
-}
 
-.projectTitle input:hover {
-    background-color: rgb(221, 87, 87);
 }
 
 .project .projectTitle {
@@ -382,6 +432,13 @@ dialog {
     overflow-x: hidden;
 }
 
+dialog * {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+}
+
 dialog form {
     display: grid;
     grid-template-rows: 40px 1fr 30px;
@@ -405,19 +462,107 @@ dialog .formDiv {
     overflow: scroll;
 }
 
-dialog * {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: fit-content;
+
+input {
+    outline: none;
 }
 
+input:focus {
+    outline: none;
+}
 
-dialog input[type="text"] {
+dialog input[type="text"], input[type="date"],  select, textarea {
     width: 300px;
+    transition: background-color 0.3s ease;
+    border: 1px solid  #ccc;
 }
 
 dialog textarea {
     width: 300px;
+    transition: background-color 0.3s ease;
 }
 
+dialog input[type="text"]:hover, input[type="date"]:hover, dialog textarea:hover, select.hover {
+    width: 300px;
+    background-color: rgb(232, 243, 255);
+    transition: background-color 0.3s ease;
+
+}
+
+*:focus {outline: none;}
+
+
+.selectProject {
+    margin-top: 10px;
+    align-self: center;
+    appearance: none;
+    width: fit-content;
+    border-top :none;
+    border-left :none;
+    border-right :none;
+    width: calc(100% + 10px);
+}
+
+.selectProject:focus {
+    outline: none;
+}
+
+.selectProject option {
+    font-style: italic;
+    font-weight: 100;
+    background-color: inherit;
+    width: 100%;
+    padding:4px 20px;
+}
+
+.selectProject option:checked {
+    font-style: normal;
+    font-weight: 900;
+    background-color: var(--color1);
+    width: 100%;
+}
+
+.selectProject option:focus {
+    font-weight: 900;
+    background-color: var(--color1);
+    width: 100%;
+}
+
+fieldset {
+    border: 1px solid #ccc; /* Light border */
+    padding: 15px;          /* Padding inside the fieldset */
+    margin-bottom: 20px;    /* Space between fieldsets */
+    border-radius: 5px;     /* Rounded corners */
+    background-color: #f9f9f9; /* Slight background color for distinction */
+}
+
+/* Styling for the legend */
+legend {
+    display: inline;
+    font-size: small;
+    font-weight: bold;      /* Bold text */
+    padding: 0 10px;        /* Space around the text */
+    color: #333;            /* Darker text color */
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+legend span {
+    display: inline;
+}
+
+.formDiv label {
+    margin-top: 10px;
+    font-variant: small-caps;
+    font-size: 15px;
+}
+
+/* Remove default padding/margin for input elements inside fieldset */
+fieldset input,
+fieldset select,
+fieldset textarea {
+    margin-bottom: 10px;         /* Margin around inputs */
+    display: block;         /* Each element on a new line */
+    width: 100%;            /* Full width for inputs */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
