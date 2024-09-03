@@ -43,6 +43,20 @@ addProjectButton.addEventListener("click", () => {
     dialog.showModal();
 })
 
+const menuAddProject = document.querySelector("#newProject");
+menuAddProject.addEventListener("click", () => {
+    const dialog = createProjectDialog();
+    document.body.appendChild(dialog);
+    dialog.showModal();
+})
+
+const menuEditProject = document.querySelector("#editProjects")
+menuEditProject.addEventListener("click", (e) => {
+    const dialog = editProjectDialog();
+    document.body.appendChild(dialog);
+    dialog.showModal();
+})
+
 // Check if "firstTime" is already set in localStorage
 if (!localStorage.getItem("firstTime")) {
     // If "firstTime" is not set, initialize it and perform any other initial setup
