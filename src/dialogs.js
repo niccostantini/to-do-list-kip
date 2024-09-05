@@ -60,7 +60,7 @@ function createProjectDialog() {
     descriptionTextarea.id = 'projectDescription';
     descriptionTextarea.name = 'projectDescription';
     descriptionTextarea.rows = 3;
-    descriptionTextarea.required = true;
+    descriptionTextarea.required = false;
     formDiv.appendChild(descriptionTextarea);
 
     formDiv.appendChild(document.createElement('hr'));
@@ -72,11 +72,6 @@ function createProjectDialog() {
     const tasksHeading = document.createElement('h3');
     tasksHeading.textContent = 'Tasks';
     tasksSection.appendChild(tasksHeading);
-
-    // Task Template
-    // const taskTemplate = document.createElement('div');
-    // taskTemplate.className = 'task-template';
-    // taskTemplate.id = 'task-template'
 
     /**THIS MUST BE MADE A FUNCTIN OF TO GENERATE AS MANY TASK FIELD AS NEEDED WHEN CLICKING ON THE NEWTASK BUTTON*/
     /**    IN THE FUNCTION THAT APPENDS THE DATA IN LOCALSTORAGE, A UNIQUE ID MUST BE GIVE TO EACH TASKS     */
@@ -142,7 +137,7 @@ function createProjectDialog() {
         taskDescriptionTextarea.id = `taskDescription-${taskNumber}`;
         taskDescriptionTextarea.name = `taskDescription-${taskNumber}`;
         taskDescriptionTextarea.rows = 3;
-        taskDescriptionTextarea.required = true;
+        taskDescriptionTextarea.required = false;
         fieldset.appendChild(taskDescriptionTextarea);
 
         // Task Due Date
@@ -268,11 +263,12 @@ function createProjectDialog() {
     createProject.textContent = 'Create Project';
     formButtonsDiv.appendChild(createProject);
 
-    createProject.addEventListener("click", (e) => {
+    form.addEventListener("submit", (e) => {
         e.preventDefault();
-        createProjectFromForm(e);
+        console.log(e.submitter)
+        createProjectFromForm(e.submitter);
         populateMainDiv();
-        resetDialog(form)
+        resetDialog(form);
         e.target.closest('dialog').close();
     })
 
@@ -431,7 +427,7 @@ function editProjectDialog(input = '') {
             taskDescriptionTextarea.id = `taskDescription-${taskNumber}`;
             taskDescriptionTextarea.name = `taskDescription-${taskNumber}`;
             taskDescriptionTextarea.rows = 3;
-            taskDescriptionTextarea.required = true;
+            taskDescriptionTextarea.required = false;
             taskDescriptionTextarea.value = task.description;
             fieldset.appendChild(taskDescriptionTextarea);
 
@@ -532,7 +528,7 @@ function editProjectDialog(input = '') {
     descriptionTextarea.id = 'projectDescription';
     descriptionTextarea.name = 'projectDescription';
     descriptionTextarea.rows = 3;
-    descriptionTextarea.required = true;
+    descriptionTextarea.required = false;
     descriptionTextarea.maxLength = 40;
     formDiv.appendChild(descriptionTextarea);
 
@@ -626,7 +622,7 @@ function editProjectDialog(input = '') {
         taskDescriptionTextarea.id = `taskDescription-${taskNumber}`;
         taskDescriptionTextarea.name = `taskDescription-${taskNumber}`;
         taskDescriptionTextarea.rows = 3;
-        taskDescriptionTextarea.required = true;
+        taskDescriptionTextarea.required = false;
         fieldset.appendChild(taskDescriptionTextarea);
 
         // Task Due Date
@@ -700,10 +696,10 @@ function editProjectDialog(input = '') {
     saveProject.textContent = 'Save';
     formButtonsDiv.appendChild(saveProject);
 
-    saveProject.addEventListener("click", (e) => {
+    form.addEventListener("submit", (e) => {
         e.preventDefault();
         console.log("prevented default behaviour of button");
-        createProjectFromForm(e);
+        createProjectFromForm(e.submitter);
         console.log("Creating project from form");
         populateMainDiv();
         console.log("Repopulated main");

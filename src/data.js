@@ -165,7 +165,7 @@ function addProject(project) {
 }
 
 
-function createProjectFromForm(e) {
+function createProjectFromForm(submitter) {
 
     let count = 1;
     
@@ -175,7 +175,7 @@ function createProjectFromForm(e) {
     let form;
 
     //Choose which form to use
-    const button = e.target.id;
+    const button = submitter.id;
     if (button == 'addProjectSubmit') {form = createForm}
     else if (button == 'saveProject') {form = editForm};
     
